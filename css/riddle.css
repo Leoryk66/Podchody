@@ -115,7 +115,7 @@ h1 {
 }
 
 /* Input */
-.input-group { display:flex; gap:10px; margin-bottom:12px; }
+.input-group { display:flex; flex-direction:column; gap:10px; margin-bottom:12px; }
 
 input[type="text"] {
   flex: 1;
