@@ -7,51 +7,34 @@
   <link rel="stylesheet" href="../css/riddle.css">
 </head>
 <body>
-  <div class="sun"></div>
-  <div class="cloud cloud-a"></div>
-  <div class="cloud cloud-b"></div>
-  <div class="tree tree-l"><div class="tree-top"></div><div class="tree-top tree-top-2"></div><div class="tree-trunk"></div></div>
-  <div class="tree tree-r"><div class="tree-top"></div><div class="tree-top tree-top-2"></div><div class="tree-trunk"></div></div>
+<div class="sun"></div>
+<div class="cloud cloud-a"></div>
+<div class="cloud cloud-b"></div>
+<div class="tree tree-l"><div class="tree-top"></div><div class="tree-top tree-top-2"></div><div class="tree-trunk"></div></div>
+<div class="tree tree-r"><div class="tree-top"></div><div class="tree-top tree-top-2"></div><div class="tree-trunk"></div></div>
 
-  <div class="card">
-    <div style="text-align:center">
-      <div class="badge">🗺️ Zagadka 2 z 3</div>
-    </div>
+<div class="card">
 
-    <div class="progress">
-      <div class="dot done"></div>
-      <div class="dot active"></div>
-      <div class="dot"></div>
-    </div>
+  <span class="riddle-emoji">2</span>
+  <h1>Zagadka 2</h1>
 
-    <span class="riddle-emoji">🌊</span>
-    <h1>Zagadka o wodzie</h1>
-
-    <div class="riddle-box">
-      Płynę przez łąki, szumię i śpiewam,<br>
-      Rybom daję dom — to dobrze wiem.<br>
-      Nie jestem morzem ani jeziorem,<br>
-      Płynę do morza — jestem… ?
-    </div>
-
-    <div class="input-group">
-      <input type="text" id="answer" placeholder="Wpisz odpowiedź..." autocomplete="off" autocorrect="off" spellcheck="false">
-      <button class="check-btn" onclick="checkAnswer(
-        ['rzeka', 'rzeka!', 'rzeka.'],
+  <div class="input-group">
+    <input type="text" id="answer" placeholder="Wpisz odpowiedź..." autocomplete="off" autocorrect="off" spellcheck="false">
+    <button class="check-btn" onclick="checkAnswer(
+        ['a', 'A'],
         'answer', 'result',
-        'Szukacie FONTANNY na rynku — sprawdźcie coś pod spodem!',
-        'zagadka-3.html'
+        'Następna zadanie znajduje się w jadalni!',
       )">Sprawdź!</button>
-    </div>
-
-    <div id="result" class="result"></div>
   </div>
 
-  <script src="../js/riddle.js"></script>
-  <script>
-    document.getElementById('answer').addEventListener('keydown', function(e) {
-      if (e.key === 'Enter') document.querySelector('.check-btn').click();
-    });
-  </script>
+  <div id="result" class="result"></div>
+</div>
+
+<script src="../js/riddle.js"></script>
+<script>
+  document.getElementById('answer').addEventListener('keydown', function(e) {
+    if (e.key === 'Enter') document.querySelector('.check-btn').click();
+  });
+</script>
 </body>
 </html>

@@ -24,7 +24,7 @@ function checkAnswer(correctAnswers, inputId, resultId, hintText, nextUrl) {
         <div class="hint-label">📍 Wskazówka:</div>
         <div class="hint-text">${hintText}</div>
       </div>
-      ${nextUrl ? `<a href="${nextUrl}" class="next-btn">Następna zagadka ➜</a>` : '<div class="final-msg">🏆 To była ostatnia zagadka!</div>'}
+      ${nextUrl ? `<a href="${nextUrl}" class="next-btn">Następna zagadka ➜</a>` : '<div class="final-msg"></div>'}
     `;
     result.style.display = 'block';
     input.disabled = true;
