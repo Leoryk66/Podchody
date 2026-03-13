@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Zagadka 1 – Wielkie Podchody</title>
+  <link rel="stylesheet" href="../css/riddle.css">
+</head>
+<body>
+  <div class="sun"></div>
+  <div class="cloud cloud-a"></div>
+  <div class="cloud cloud-b"></div>
+  <div class="tree tree-l"><div class="tree-top"></div><div class="tree-top tree-top-2"></div><div class="tree-trunk"></div></div>
+  <div class="tree tree-r"><div class="tree-top"></div><div class="tree-top tree-top-2"></div><div class="tree-trunk"></div></div>
+
+  <div class="card">
+    <div style="text-align:center">
+      <div class="badge">🗺️ Zagadka 1 z 3</div>
+    </div>
+
+    <div class="progress">
+      <div class="dot active"></div>
+      <div class="dot"></div>
+      <div class="dot"></div>
+    </div>
+
+    <span class="riddle-emoji">🌳</span>
+    <h1>Zagadka o drzewie</h1>
+
+    <div class="riddle-box">
+      Mam liście latem, gołe gałęzie zimą.<br>
+      Daję cień i tlen — przyroda jest ze mnie dumna.<br>
+      Jestem wysoki, mam pień i koronę,<br>
+      Lecz nie jestem królem — jestem… ?
+    </div>
+
+    <div class="input-group">
+      <input type="text" id="answer" placeholder="Wpisz odpowiedź..." autocomplete="off" autocorrect="off" spellcheck="false">
+      <button class="check-btn" onclick="checkAnswer(
+        ['drzewo', 'drzewem'],
+        'answer', 'result',
+        'Następną wskazówkę znajdziecie przy ŁAWCE w parku — tej z czerwonym napisem!',
+        'zagadka-2.html'
+      )">Sprawdź!</button>
+    </div>
+
+    <div id="result" class="result"></div>
+  </div>
+
+  <script src="../js/riddle.js"></script>
+  <script>
+    document.getElementById('answer').addEventListener('keydown', function(e) {
+      if (e.key === 'Enter') document.querySelector('.check-btn').click();
+    });
+  </script>
+</body>
+</html>

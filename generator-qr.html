@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Generator QR – Podchody</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+  <style>
+    :root { --dark:#1a237e; --accent:#ff7043; --green:#43a047; }
+    * { margin:0;padding:0;box-sizing:border-box; }
+    body { font-family:'Nunito',sans-serif; background:#f5f7ff; min-height:100vh; padding:30px 20px; }
+    h1 { font-family:'Fredoka One',cursive; color:var(--dark); font-size:2rem; text-align:center; margin-bottom:6px; }
+    .subtitle { text-align:center; color:#666; margin-bottom:30px; font-weight:600; }
+    .container { max-width:800px; margin:0 auto; }
+
+    .card { background:white; border-radius:20px; padding:28px; margin-bottom:20px; box-shadow:0 4px 20px rgba(0,0,0,0.08); }
+    .card h2 { font-family:'Fredoka One',cursive; color:var(--dark); font-size:1.3rem; margin-bottom:16px; }
+
+    .field { margin-bottom:14px; }
+    label { font-weight:700; font-size:0.9rem; color:#555; display:block; margin-bottom:5px; }
+    input[type="text"] {
+      width:100%; border:2px solid #e0e0e0; border-radius:10px;
+      padding:11px 14px; font-size:1rem; font-family:'Nunito',sans-serif;
+      font-weight:600; outline:none; transition:border-color 0.2s;
+    }
+    input:focus { border-color:var(--accent); }
+
+    .btn {
+      background:linear-gradient(135deg,var(--accent),#e64a19);
+      color:white; border:none; border-radius:12px;
+      padding:13px 28px; font-family:'Fredoka One',cursive;
+      font-size:1.1rem; cursor:pointer;
+      box-shadow:0 4px 15px rgba(255,112,67,0.4);
+      transition:transform 0.15s;
+    }
+    .btn:hover { transform:translateY(-2px); }
+    .btn-green {
+      background:linear-gradient(135deg,var(--green),#2e7d32);
+      box-shadow:0 4px 15px rgba(67,160,71,0.4);
+    }
+
+    .qr-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(220px,1fr)); gap:20px; margin-top:20px; }
+    .qr-item {
+      background:white; border-radius:16px; padding:20px;
+      box-shadow:0 4px 15px rgba(0,0,0,0.08); text-align:center;
+      border:2px solid #e8eaf6;
+    }
+    .qr-item .label { font-family:'Fredoka One',cursive; color:var(--dark); font-size:1rem; margin-bottom:12px; }
+    .qr-item canvas, .qr-item img { border-radius:8px; }
+    .qr-url { font-size:0.72rem; color:#999; margin-top:8px; word-break:break-all; }
+
+    .info-box { background:#e8f5e9; border-left:4px solid var(--green); border-radius:10px; padding:14px 16px; margin-bottom:20px; font-size:0.95rem; color:#2e7d32; font-weight:600; line-height:1.6; }
+    .step { display:flex; gap:12px; margin-bottom:10px; align-items:flex-start; }
+    .step-num { background:var(--dark); color:white; font-family:'Fredoka One',cursive; width:28px; height:28px; border-radius:50%; display:flex; align-items:center; justify-content:center; flex-shrink:0; font-size:0.9rem; }
+
+    @media print {
+      .no-print { display:none; }
+      body { background:white; padding:10px; }
+      .qr-item { break-inside:avoid; page-break-inside:avoid; border:1px solid #ccc; }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>🔲 Generator Kodów QR</h1>
+    <p class="subtitle">Wygeneruj kody QR dla swoich zagadek w podchodach</p>
+
+    <div class="card no-print">
+      <h2>⚙️ Ustawienia</h2>
+
+      <div class="info-box">
+        💡 Wpisz adres swojej strony na GitHub Pages np:<br>
+        <strong>https://TWOJANAZWA.github.io/podchody</strong><br>
+        a zagadki będą dostępne pod adresami:<br>
+        <strong>.../zagadki/zagadka-1.html</strong> itd.
+      </div>
+
+      <div class="field">
+        <label>🌐 Bazowy URL strony (bez końcowego /)</label>
+        <input type="text" id="baseUrl" value="https://TWOJANAZWA.github.io/podchody" placeholder="https://twojlogin.github.io/podchody">
+      </div>
+      <div class="field">
+        <label>🔢 Liczba zagadek</label>
+        <input type="text" id="count" value="3" placeholder="3">
+      </div>
+      <div style="display:flex;gap:12px;flex-wrap:wrap;margin-top:6px;">
+        <button class="btn" onclick="generateQRs()">🔲 Generuj kody QR</button>
+        <button class="btn btn-green no-print" onclick="window.print()">🖨️ Drukuj / Zapisz PDF</button>
+      </div>
+    </div>
+
+    <div id="qrOutput"></div>
+
+    <div class="card no-print">
+      <h2>📖 Instrukcja — jak wrzucić na GitHub Pages</h2>
+      <div class="step"><div class="step-num">1</div><div>Załóż darmowe konto na <strong>github.com</strong></div></div>
+      <div class="step"><div class="step-num">2</div><div>Utwórz nowe repozytorium o nazwie <strong>podchody</strong> (Public)</div></div>
+      <div class="step"><div class="step-num">3</div><div>Wgraj wszystkie pliki z folderu <strong>podchody/</strong> do repozytorium (przeciągnij i upuść lub użyj GitHub Desktop)</div></div>
+      <div class="step"><div class="step-num">4</div><div>Wejdź w <strong>Settings → Pages</strong>, ustaw Source na <strong>main branch</strong> i kliknij Save</div></div>
+      <div class="step"><div class="step-num">5</div><div>Po chwili strona będzie dostępna pod adresem <strong>twojlogin.github.io/podchody</strong></div></div>
+      <div class="step"><div class="step-num">6</div><div>Wróć tutaj, wpisz swój adres URL powyżej i wygeneruj kody QR do wydrukowania!</div></div>
+    </div>
+  </div>
+
+  <script>
+    function generateQRs() {
+      const baseUrl = document.getElementById('baseUrl').value.replace(/\/$/, '');
+      const count = parseInt(document.getElementById('count').value) || 3;
+      const output = document.getElementById('qrOutput');
+      output.innerHTML = '';
+
+      const card = document.createElement('div');
+      card.className = 'card';
+      card.innerHTML = `<h2>🔲 Kody QR do wydruku</h2>`;
+
+      // Strona startowa
+      const grid = document.createElement('div');
+      grid.className = 'qr-grid';
+
+      // QR dla strony głównej
+      addQR(grid, `${baseUrl}/index.html`, '🗺️ Start gry');
+
+      // QR dla każdej zagadki
+      for (let i = 1; i <= count; i++) {
+        addQR(grid, `${baseUrl}/zagadki/zagadka-${i}.html`, `🔍 Zagadka ${i}`);
+      }
+
+      card.appendChild(grid);
+      output.appendChild(card);
+    }
+
+    function addQR(container, url, label) {
+      const item = document.createElement('div');
+      item.className = 'qr-item';
+      item.innerHTML = `<div class="label">${label}</div><div id="qr-${Math.random().toString(36).substr(2,9)}"></div><div class="qr-url">${url}</div>`;
+      container.appendChild(item);
+
+      const qrDiv = item.querySelector('div:nth-child(2)');
+      new QRCode(qrDiv, {
+        text: url,
+        width: 160,
+        height: 160,
+        colorDark: '#1a237e',
+        colorLight: '#ffffff',
+        correctLevel: QRCode.CorrectLevel.H
+      });
+    }
+
+    // Auto-generate on load with default values
+    window.addEventListener('load', () => setTimeout(generateQRs, 300));
+  </script>
+</body>
+</html>

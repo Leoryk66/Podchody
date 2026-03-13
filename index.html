@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>🗺️ Wielkie Podchody!</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --sky: #4fc3f7;
+      --grass: #66bb6a;
+      --sun: #ffca28;
+      --bark: #8d6e63;
+      --cloud: #fff;
+      --dark: #1a237e;
+      --accent: #ff7043;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: 'Nunito', sans-serif;
+      background: linear-gradient(180deg, var(--sky) 0%, #b3e5fc 55%, var(--grass) 55%, #43a047 100%);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      overflow: hidden;
+    }
+
+    /* Clouds */
+    .cloud {
+      position: fixed;
+      background: white;
+      border-radius: 50px;
+      opacity: 0.85;
+      animation: float linear infinite;
+    }
+    .cloud::before, .cloud::after {
+      content: '';
+      position: absolute;
+      background: white;
+      border-radius: 50%;
+    }
+    .cloud-1 { width: 120px; height: 40px; top: 8%; left: -140px; animation-duration: 25s; }
+    .cloud-1::before { width: 60px; height: 60px; top: -30px; left: 15px; }
+    .cloud-1::after { width: 40px; height: 40px; top: -20px; left: 55px; }
+    .cloud-2 { width: 90px; height: 30px; top: 18%; left: -110px; animation-duration: 35s; animation-delay: -10s; }
+    .cloud-2::before { width: 45px; height: 45px; top: -22px; left: 10px; }
+    .cloud-2::after { width: 30px; height: 30px; top: -15px; left: 45px; }
+    .cloud-3 { width: 150px; height: 45px; top: 5%; left: -170px; animation-duration: 45s; animation-delay: -20s; }
+    .cloud-3::before { width: 70px; height: 70px; top: -35px; left: 20px; }
+    .cloud-3::after { width: 50px; height: 50px; top: -25px; left: 75px; }
+
+    @keyframes float {
+      to { transform: translateX(110vw); }
+    }
+
+    /* Sun */
+    .sun {
+      position: fixed;
+      top: 30px;
+      right: 40px;
+      width: 70px;
+      height: 70px;
+      background: var(--sun);
+      border-radius: 50%;
+      box-shadow: 0 0 0 10px rgba(255,202,40,0.3), 0 0 0 20px rgba(255,202,40,0.15);
+      animation: pulse 3s ease-in-out infinite;
+    }
+    @keyframes pulse {
+      0%, 100% { box-shadow: 0 0 0 10px rgba(255,202,40,0.3), 0 0 0 20px rgba(255,202,40,0.15); }
+      50% { box-shadow: 0 0 0 15px rgba(255,202,40,0.3), 0 0 0 30px rgba(255,202,40,0.15); }
+    }
+
+    /* Trees */
+    .tree {
+      position: fixed;
+      bottom: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    .tree-top {
+      width: 0; height: 0;
+      border-left: solid transparent;
+      border-right: solid transparent;
+      border-bottom: solid var(--grass);
+    }
+    .tree-top-2 { margin-top: -20px; }
+    .tree-trunk {
+      background: var(--bark);
+      border-radius: 4px;
+    }
+    .tree-1 { left: 5%; }
+    .tree-1 .tree-top { border-left-width: 35px; border-right-width: 35px; border-bottom-width: 60px; border-bottom-color: #388e3c; }
+    .tree-1 .tree-top-2 { border-left-width: 45px; border-right-width: 45px; border-bottom-width: 70px; }
+    .tree-1 .tree-trunk { width: 18px; height: 40px; }
+    .tree-2 { right: 8%; }
+    .tree-2 .tree-top { border-left-width: 25px; border-right-width: 25px; border-bottom-width: 50px; border-bottom-color: #2e7d32; }
+    .tree-2 .tree-top-2 { border-left-width: 35px; border-right-width: 35px; border-bottom-width: 60px; border-bottom-color: #388e3c; }
+    .tree-2 .tree-trunk { width: 14px; height: 30px; }
+    .tree-3 { right: 20%; }
+    .tree-3 .tree-top { border-left-width: 30px; border-right-width: 30px; border-bottom-width: 55px; border-bottom-color: #1b5e20; }
+    .tree-3 .tree-top-2 { border-left-width: 40px; border-right-width: 40px; border-bottom-width: 65px; border-bottom-color: #2e7d32; }
+    .tree-3 .tree-trunk { width: 16px; height: 35px; }
+
+    /* Card */
+    .card {
+      background: white;
+      border-radius: 30px;
+      padding: 40px 36px;
+      max-width: 480px;
+      width: 100%;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.18), 0 2px 0 rgba(255,255,255,0.8) inset;
+      position: relative;
+      z-index: 10;
+      text-align: center;
+      animation: bounceIn 0.7s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+
+    @keyframes bounceIn {
+      from { opacity: 0; transform: scale(0.7) translateY(40px); }
+      to { opacity: 1; transform: scale(1) translateY(0); }
+    }
+
+    .logo {
+      font-size: 64px;
+      margin-bottom: 8px;
+      animation: wiggle 2s ease-in-out infinite;
+    }
+    @keyframes wiggle {
+      0%, 100% { transform: rotate(-3deg); }
+      50% { transform: rotate(3deg); }
+    }
+
+    h1 {
+      font-family: 'Fredoka One', cursive;
+      font-size: 2.6rem;
+      color: var(--dark);
+      margin-bottom: 8px;
+      line-height: 1.1;
+    }
+
+    .subtitle {
+      font-size: 1.1rem;
+      color: #555;
+      margin-bottom: 30px;
+      font-weight: 600;
+    }
+
+    .mission-box {
+      background: linear-gradient(135deg, #fff9c4, #fff3cd);
+      border: 3px dashed var(--sun);
+      border-radius: 18px;
+      padding: 20px;
+      margin-bottom: 28px;
+    }
+
+    .mission-box h2 {
+      font-family: 'Fredoka One', cursive;
+      color: var(--accent);
+      font-size: 1.3rem;
+      margin-bottom: 8px;
+    }
+
+    .mission-box p {
+      font-size: 1rem;
+      color: #555;
+      line-height: 1.5;
+    }
+
+    .start-btn {
+      display: inline-block;
+      background: linear-gradient(135deg, var(--accent), #e64a19);
+      color: white;
+      font-family: 'Fredoka One', cursive;
+      font-size: 1.4rem;
+      padding: 16px 40px;
+      border-radius: 50px;
+      text-decoration: none;
+      box-shadow: 0 6px 20px rgba(255,112,67,0.45);
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+    .start-btn:hover {
+      transform: translateY(-3px) scale(1.04);
+      box-shadow: 0 10px 28px rgba(255,112,67,0.5);
+    }
+
+    .footprint {
+      margin-top: 24px;
+      font-size: 0.9rem;
+      color: #aaa;
+    }
+  </style>
+</head>
+<body>
+  <div class="sun"></div>
+  <div class="cloud cloud-1"></div>
+  <div class="cloud cloud-2"></div>
+  <div class="cloud cloud-3"></div>
+
+  <div class="tree tree-1">
+    <div class="tree-top"></div>
+    <div class="tree-top tree-top-2"></div>
+    <div class="tree-trunk"></div>
+  </div>
+  <div class="tree tree-2">
+    <div class="tree-top"></div>
+    <div class="tree-top tree-top-2"></div>
+    <div class="tree-trunk"></div>
+  </div>
+  <div class="tree tree-3">
+    <div class="tree-top"></div>
+    <div class="tree-top tree-top-2"></div>
+    <div class="tree-trunk"></div>
+  </div>
+
+  <div class="card">
+    <div class="logo">🗺️</div>
+    <h1>Wielkie Podchody!</h1>
+    <p class="subtitle">Przygoda czeka za rogiem...</p>
+
+    <div class="mission-box">
+      <h2>📋 Misja</h2>
+      <p>Rozwiązuj zagadki, szukaj wskazówek i znajdź ukryty skarb! Każda prawidłowa odpowiedź zaprowadzi Cię do następnego miejsca.</p>
+    </div>
+
+    <a href="zagadki/zagadka-1.html" class="start-btn">🚀 Startujemy!</a>
+
+    <p class="footprint">🐾 🐾 🐾</p>
+  </div>
+</body>
+</html>
